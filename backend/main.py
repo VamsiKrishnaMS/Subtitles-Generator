@@ -9,8 +9,12 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Mount the frontend directory to serve static files
-app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
+# Get the absolute path to the frontend directory
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+FRONTEND_DIR = os.path.join(BASE_DIR, "../frontend")
+
+# Mount the frontend directory
+app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="static")
 
 # Add CORS Middleware
 app.add_middleware(
