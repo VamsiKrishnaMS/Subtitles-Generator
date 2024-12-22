@@ -19,7 +19,7 @@ app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="static")
 # Add CORS Middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://127.0.0.1:8080"],  # Allow requests from your frontend URL
+    allow_origins=["https://subtitles-generator.onrender.com/"],  # Allow requests from your frontend URL
     allow_credentials=True,
     allow_methods=["*"],  # Allow all HTTP methods (e.g., GET, POST)
     allow_headers=["*"],  # Allow all headers
