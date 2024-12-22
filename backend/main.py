@@ -1,4 +1,5 @@
 from fastapi import FastAPI, File, UploadFile, HTTPException
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 import os
 from moviepy import *
@@ -7,6 +8,9 @@ from deep_translator import GoogleTranslator
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# Mount the frontend directory to serve static files
+app.mount("/", StaticFiles(directory="frontend", html=True), name="static")
 
 # Add CORS Middleware
 app.add_middleware(

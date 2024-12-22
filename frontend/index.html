@@ -63,7 +63,7 @@
             formData.append('file', videoFile);
 
             try {
-                const response = await fetch('https://subtitles-generator.onrender.com', {
+                const response = await fetch('https://subtitles-generator.onrender.com/upload', {
                     method: 'POST',
                     body: formData
                 });
