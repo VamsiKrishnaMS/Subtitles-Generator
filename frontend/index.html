@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subtitles Generator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div class="hero">
+            <h1>Subtitles Generator</h1>
+            <p>Translate German speech to English subtitles seamlessly.</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <form id="upload-form">
+            <h2>Upload Your Video</h2>
+            <label for="video-upload">Select a video file:</label>
+            <input type="file" id="video-upload" accept="video/*" required>
+            <button type="submit">Translate</button>
+        </form>
+        <div id="progress" style="display: none;">Processing your video...</div>
+        <a id="download-link" style="display: none;">Download Subtitles</a>
+    </div>
+
+    <div class="about-section">
+        <h2>About Me</h2>
+        <div class="profile">
+            <div class="profile-image">
+                <img src="images/vamsi_01.jpg" alt="Vamsi Krishna">
+            </div>
+            <div class="profile-text">
+                <p>Hi, I'm Vamsi Krishna, a passionate developer who loves building creative solutions.</p>
+                <p>Dedicated Researcher and Software Engineer with expertise in cutting-edge technologies and a penchant for Augmented Reality (AR) solutions. My journey in the realm of technology has led me to delve into various areas, including Angular, TypeScript/JavaScript, HTML, CSS, jQuery, Python, C, and C++.</p>
+                <p>Connect with me on:</p>
+                <ul>
+                    <li><a href="https://www.linkedin.com/in/vamsikrishnaminnal" target="_blank">LinkedIn</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Vamsi Krishna | Made with ❤️ for seamless video translations</p>
+    </footer>
+
+    <script>
+        const form = document.getElementById('upload-form');
+        const progress = document.getElementById('progress');
+        const downloadLink = document.getElementById('download-link');
+
+        form.addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const videoFile = document.getElementById('video-upload').files[0];
+            if (!videoFile) return;
+
+            progress.style.display = 'block';
+            downloadLink.style.display = 'none';
+
+            const formData = new FormData();
+            formData.append('file', videoFile);
+
+            try {
+                const response = await fetch('http://127.0.0.1:8000/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (!response.ok) {
+                    throw new Error('Translation failed.');
+                }
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+                downloadLink.href = url;
+                downloadLink.download = 'subtitles.srt';
+                downloadLink.style.display = 'block';
+                downloadLink.textContent = 'Download Subtitles';
+            } catch (error) {
+                alert('Error: ' + error.message);
+            } finally {
+                progress.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

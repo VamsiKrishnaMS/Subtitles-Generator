@@ -1,0 +1,7 @@
+fastapi
+uvicorn
+whisper
+deep-translator
+moviepy
+python-multipart
+openai-whisper
